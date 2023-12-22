@@ -1,4 +1,5 @@
 import { _decorator, Node, Component, SpriteFrame, Sprite, Enum, random, Tween, tween, Vec3, v3, UITransform } from 'cc';
+import { AudioMgr } from './lib/AudioMgr'
 const { ccclass, property } = _decorator;
 
 
@@ -95,6 +96,9 @@ export class FruitItem extends Component {
     click(ev: Event) {
         console.log(`fruit item click ${this._x}, ${this._y}, ${this._idx}`);
         this.setActive(!this._isActive);
+        if (this._isActive) {
+            AudioMgr.inst.play('music/itemSelect');
+        }
     }
 
 }

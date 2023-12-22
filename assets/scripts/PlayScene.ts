@@ -1,4 +1,5 @@
-import { _decorator, Component, director, sys, Prefab, Label, instantiate, UITransform, view, Vec2, Node } from 'cc';
+import { _decorator, Component, director, sys, Prefab, Label, 
+    instantiate, UITransform, view, Vec2, Node, tween, Vec3 } from 'cc';
 import { FruitItem } from './FruitItem';
 import { AudioMgr } from './lib/AudioMgr';
 const { ccclass, property } = _decorator;
@@ -39,6 +40,8 @@ export class PlayScene extends Component {
     private _matrixLBX: number = 0;
     private _matrixLBY: number = 0;
     private _fruitWidth: number = 0;
+    private _vWidth: number = 0;
+    private _vHeight: number = 0;
     private _matrix: Map<number, FruitItem> = new Map<number, FruitItem>();
     private _actives: Map<number, FruitItem> = new Map<number, FruitItem>(); 
 
@@ -60,16 +63,18 @@ export class PlayScene extends Component {
         // let width = this.node.getComponent(UITransform)?.contentSize.width;
         // let height = this.node.getComponent(UITransform)?.contentSize.height;
 
-        let { width, height } = view.getVisibleSize();
+        let size = view.getVisibleSize();
+        this._vWidth = size.width;
+        this._vHeight = size.height;
         this._fruitWidth = instantiate(this.fruitPrefab).getComponent(UITransform)?.contentSize.width;
 
-        this._matrixLBX = (width-this._fruitWidth*this._xCount-(this._yCount-1)*this._fruitGap) / 2;
-        this._matrixLBY = (height-this._fruitWidth*this._yCount-(this._xCount-1)*this._fruitGap) / 2 - 30;
+        this._matrixLBX = (this._vWidth-this._fruitWidth*this._xCount-(this._yCount-1)*this._fruitGap) / 2;
+        this._matrixLBY = (this._vHeight-this._fruitWidth*this._yCount-(this._xCount-1)*this._fruitGap) / 2 - 30;
 
-        this._matrixLBX -= width/2;
-        this._matrixLBY -= height/2;
+        this._matrixLBX -= this._vWidth/2;
+        this._matrixLBY -= this._vHeight/2;
 
-        console.log(`play ${width}, ${height}, ${this._fruitWidth}, ${this._matrixLBX}, ${this._matrixLBY}`);
+        console.log(`play ${this._vWidth}, ${this._vHeight}, ${this._fruitWidth}, ${this._matrixLBX}, ${this._matrixLBY}`);
 
         this.initMartix();
         
@@ -98,7 +103,10 @@ export class PlayScene extends Component {
         let newFruit = instantiate(this.fruitPrefab);
         newFruit.getComponent(FruitItem).create(x, y, fruitIndex);
         let pos = this.positionOfFruit(x, y);
-        newFruit.setPosition(pos.x, pos.y);
+        let startPos = new Vec2(pos.x, pos.y+this._vHeight/2);
+        newFruit.setPosition(startPos.x, startPos.y);
+        let speed = startPos.y / (1.5*this._vHeight);
+        tween(newFruit).to(speed, { position: new Vec3(pos.x, pos.y)}).start();
         this._matrix.set((y - 1) * this._xCount + x, newFruit.getComponent(FruitItem));
         this.node.addChild(newFruit);
 
