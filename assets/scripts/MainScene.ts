@@ -16,7 +16,7 @@ export class MainScene extends Component {
     }
 
     changeScene() {
-        AudioMgr.inst.playOneShot('music/btnStart');
+        // AudioMgr.inst.playOneShot('music/btnStart');
         director.loadScene('play');
     }
 }

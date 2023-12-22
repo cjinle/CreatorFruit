@@ -55,8 +55,7 @@ export class FruitItem extends Component {
     }
 
     create(x: number, y: number, idx?: number) {
-        console.log(`fruit item create ${x}, ${y}, ${idx}`);
-
+        // console.log(`fruit item create ${x}, ${y}, ${idx}`);
         this._x = x;
         this._y = y;
         this._isActive = false;        
@@ -85,12 +84,16 @@ export class FruitItem extends Component {
         // this.node.removeFromParent();
     }
 
+    getIdx(): number {
+        return this._idx;
+    }
+
     getWidth(): number {
         return this._width;
     }
 
     click(ev: Event) {
-        console.log('item click');
+        console.log(`fruit item click ${this._x}, ${this._y}, ${this._idx}`);
         this.setActive(!this._isActive);
     }
 
