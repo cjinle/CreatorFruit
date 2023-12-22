@@ -38,8 +38,8 @@ export class FruitItem extends Component {
     width: number = 0;
 
     onLoad() {
-        console.log('fruit item load');
-        this._handler = this.click;
+        // console.log('fruit item load');
+        // this._handler = this.click;
         // this.node.on(Node.EventType.TOUCH_START, this._handler, this);
     }
 

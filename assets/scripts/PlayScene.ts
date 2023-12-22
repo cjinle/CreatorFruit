@@ -66,6 +66,7 @@ export class PlayScene extends Component {
         let size = view.getVisibleSize();
         this._vWidth = size.width;
         this._vHeight = size.height;
+
         this._fruitWidth = instantiate(this.fruitPrefab).getComponent(UITransform)?.contentSize.width;
 
         this._matrixLBX = (this._vWidth-this._fruitWidth*this._xCount-(this._yCount-1)*this._fruitGap) / 2;
@@ -111,7 +112,7 @@ export class PlayScene extends Component {
         this.node.addChild(newFruit);
 
         newFruit.on(Node.EventType.TOUCH_END, ()=>{
-            console.log(`click ${x}, ${y}, ${fruitIndex}`);
+            // console.log(`click ${x}, ${y}, ${fruitIndex}`);
             if (newFruit.getComponent(FruitItem).isActive) {
                 let musicIdx = this._actives.length;
                 if (musicIdx < 2) musicIdx = 2;
@@ -213,7 +214,6 @@ export class PlayScene extends Component {
                 let key = (y - 1) * this._xCount + x;
                 if (this._matrix.has(key)) {
                     let temp = this._matrix.get(key);
-                    console.log(`xx ${removedFruits}`);
                     if (removedFruits > 0) {
                         newY = y - removedFruits;
                         this._matrix.set((newY-1)*this._xCount+x, temp);
