@@ -81,7 +81,8 @@ export class FruitItem extends Component {
             let t1 = tween(this.node).to(0.1, { scale: new Vec3(1.1, 1.1, 1.1) });
             let t2 = tween(this.node).to(0.05, { scale: v3(1, 1, 1) });
             tween(this.node).sequence(t1, t2).start();
-        }
+        } 
+        // this.node.removeFromParent();
     }
 
     getWidth(): number {
