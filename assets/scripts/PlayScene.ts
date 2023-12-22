@@ -1,4 +1,4 @@
-import { _decorator, Component, director, sys, Prefab, Label, instantiate, UITransform, view, Vec2 } from 'cc';
+import { _decorator, Component, director, sys, Prefab, Label, instantiate, UITransform, view, Vec2, Node } from 'cc';
 import { FruitItem } from './FruitItem';
 import { AudioMgr } from './lib/AudioMgr';
 const { ccclass, property } = _decorator;
@@ -91,6 +91,7 @@ export class PlayScene extends Component {
                 }
             }
         }
+
     }
 
     createAndDropFruit(x: number, y: number, fruitIndex?: number) {
@@ -100,6 +101,11 @@ export class PlayScene extends Component {
         newFruit.setPosition(pos.x, pos.y);
         this._matrix.set((y - 1) * this._xCount + x, newFruit.getComponent(FruitItem));
         this.node.addChild(newFruit);
+
+        newFruit.on(Node.EventType.TOUCH_END, ()=>{
+            console.log(`click ${x}, ${y}, ${fruitIndex}`);
+            // newFruit.removeFromParent();
+        });
     }
 
     positionOfFruit(x: number, y: number): Vec2 {
