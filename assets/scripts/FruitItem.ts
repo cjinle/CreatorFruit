@@ -1,4 +1,4 @@
-import { _decorator, Node, Component, SpriteFrame, Sprite, Enum, random } from 'cc';
+import { _decorator, Node, Component, SpriteFrame, Sprite, Enum, random, Tween, tween, Vec3, v3, UITransform } from 'cc';
 const { ccclass, property } = _decorator;
 
 
@@ -29,39 +29,68 @@ export class FruitItem extends Component {
     testArray: ETest[] = [];
 
     private _handler: Function;
-    private _handler2: Function;
 
     private _x: number = 0;
     private _y: number = 0;
     private _idx: number = 0;
+    private _isActive: boolean = false;
+    private _width: number = 0;
 
     onLoad() {
         console.log('fruit item load');
         this._handler = this.click;
-        this._handler2 = this.click2;
         this.node.on(Node.EventType.TOUCH_START, this._handler, this);
-        this.node.on(Node.EventType.TOUCH_START, this._handler2, this);
     }
 
     start() {
-        this.schedule(()=>{
-            let idx = (random()*100000) % this.fruits.length | 0;
-            this.icon.spriteFrame = this.fruits[idx].icon;
-        }, 1);
+        // this.scheduleOnce(()=>{
+        //     this._idx = (random()*100000) % this.fruits.length | 0;
+        //     this.icon.spriteFrame = this.fruits[this._idx].icon;
+        // }, 1);
     }
 
     onDestroy() {
         console.log('fruit item destory');
         this.node.off(Node.EventType.TOUCH_START, this._handler, this);
-        this.node.off(Node.EventType.TOUCH_START, this._handler2, this);
+    }
+
+    create(x: number, y: number, idx?: number) {
+        console.log(`fruit item create ${x}, ${y}, ${idx}`);
+
+        this._x = x;
+        this._y = y;
+        this._isActive = false;        
+        if (typeof idx == 'undefined') {
+            idx = (random() * 100000) % this.fruits.length | 0;
+        }
+
+        this._idx = idx;
+        this.icon.spriteFrame = this.fruits[this._idx].icon;
+        this._width = this.node.getComponent(UITransform).width;
+    }
+
+    setActive(active: boolean) {
+        this._isActive = active;
+        if (active) {
+            this.icon.spriteFrame = this.fruits[this._idx].icon2;
+        } else {
+            this.icon.spriteFrame = this.fruits[this._idx].icon;
+        }
+        if (active) {
+            Tween.stopAllByTarget(this.node);
+            let t1 = tween(this.node).to(0.1, { scale: new Vec3(1.1, 1.1, 1.1) });
+            let t2 = tween(this.node).to(0.05, { scale: v3(1, 1, 1) });
+            tween(this.node).sequence(t1, t2).start();
+        }
+    }
+
+    getWidth(): number {
+        return this._width;
     }
 
     click(ev: Event) {
         console.log('item click');
-        
+        this.setActive(!this._isActive);
     }
 
-    click2(ev: Event) {
-        console.log('item click2');
-    }
 }

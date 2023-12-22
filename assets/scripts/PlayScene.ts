@@ -1,4 +1,5 @@
 import { _decorator, Component, director, sys, Prefab, Label, instantiate, random } from 'cc';
+import { FruitItem } from './FruitItem';
 import { AudioMgr } from './lib/AudioMgr';
 const { ccclass, property } = _decorator;
 
@@ -51,13 +52,16 @@ export class PlayScene extends Component {
 
         // AudioMgr.inst.play('music/mainbg');
 
+        this.createAndDropFruit(1,2);
+
         
     }
 
     createAndDropFruit(x: number, y: number, fruitIndex?: number) {
         let newFruit = instantiate(this.fruitPrefab);
-        newFruit.setPosition(0, 0);
-
+        newFruit.getComponent(FruitItem).create(x, y);
+        // newFruit.setPosition(500, 300);
+        this.node.addChild(newFruit);
     }
 
     
