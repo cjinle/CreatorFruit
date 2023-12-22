@@ -1,4 +1,4 @@
-import { _decorator, Component, director, sys, Prefab, Label, instantiate } from 'cc';
+import { _decorator, Component, director, sys, Prefab, Label, instantiate, random } from 'cc';
 import { AudioMgr } from './lib/AudioMgr';
 const { ccclass, property } = _decorator;
 
@@ -43,14 +43,15 @@ export class PlayScene extends Component {
     }
 
     start() {
-        this.highScoreLabel.string = this._highScore.toString();
-        this.highStageLabel.string = this._stage.toString();
-        this.highTargetLabel.string = this._target.toString();
-        this.curScoreLabel.string = this._curScore.toString();
-        this.activeScoreLabel.string = '';
+        // this.highScoreLabel.string = this._highScore.toString();
+        // this.highStageLabel.string = this._stage.toString();
+        // this.highTargetLabel.string = this._target.toString();
+        // this.curScoreLabel.string = this._curScore.toString();
+        // this.activeScoreLabel.string = '';
 
-        AudioMgr.inst.play('music/mainbg');
+        // AudioMgr.inst.play('music/mainbg');
 
+        
     }
 
     createAndDropFruit(x: number, y: number, fruitIndex?: number) {

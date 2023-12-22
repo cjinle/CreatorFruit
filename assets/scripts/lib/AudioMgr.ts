@@ -4,7 +4,7 @@ export class AudioMgr {
     
     private static _inst: AudioMgr;
 
-    public static get inst(): AudioMgr {
+    static get inst(): AudioMgr {
         if (this._inst == null) {
             this._inst = new AudioMgr();
         }
@@ -22,7 +22,7 @@ export class AudioMgr {
         this._audioSource = audioMgr.addComponent(AudioSource);
     }
 
-    public get audioSource() {
+    get audioSource() {
         return this._audioSource;
     }
 

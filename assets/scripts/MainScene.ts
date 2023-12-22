@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, director } from 'cc';
+import { _decorator, Component, random, director } from 'cc';
 import { AudioMgr } from './lib/AudioMgr';
 const { ccclass, property } = _decorator;
 
@@ -12,7 +12,7 @@ export class MainScene extends Component {
     }
 
     start() {
-
+        
     }
 
     changeScene() {
