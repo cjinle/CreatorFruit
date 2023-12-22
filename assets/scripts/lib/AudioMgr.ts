@@ -40,11 +40,12 @@ export class AudioMgr {
         }
     }
 
-    play(sound: AudioClip|string, volume: number = 1.0) {
+    play(sound: AudioClip|string, volume: number = 1.0, loop: boolean = false) {
         if (sound instanceof AudioClip) {
             this._audioSource.clip = sound;
             this._audioSource.play();
             this._audioSource.volume = volume;
+            this._audioSource.loop = loop;
         } else {
             resources.load(sound, (err, clip: AudioClip)=>{
                 if (err) {
@@ -53,6 +54,7 @@ export class AudioMgr {
                     this._audioSource.clip = clip;
                     this._audioSource.play();
                     this._audioSource.volume = volume;
+                    this._audioSource.loop = loop;
                 }
             });
         }

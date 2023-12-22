@@ -31,16 +31,16 @@ export class FruitItem extends Component {
 
     private _handler: Function;
 
-    private _x: number = 0;
-    private _y: number = 0;
-    private _idx: number = 0;
-    private _isActive: boolean = false;
-    private _width: number = 0;
+    x: number = 0;
+    y: number = 0;
+    idx: number = 0;
+    isActive: boolean = false;
+    width: number = 0;
 
     onLoad() {
         console.log('fruit item load');
         this._handler = this.click;
-        this.node.on(Node.EventType.TOUCH_START, this._handler, this);
+        // this.node.on(Node.EventType.TOUCH_START, this._handler, this);
     }
 
     start() {
@@ -52,29 +52,29 @@ export class FruitItem extends Component {
 
     onDestroy() {
         console.log('fruit item destory');
-        this.node.off(Node.EventType.TOUCH_START, this._handler, this);
+        // this.node.off(Node.EventType.TOUCH_START, this._handler, this);
     }
 
     create(x: number, y: number, idx?: number) {
         // console.log(`fruit item create ${x}, ${y}, ${idx}`);
-        this._x = x;
-        this._y = y;
-        this._isActive = false;        
+        this.x = x;
+        this.y = y;
+        this.isActive = false;        
         if (typeof idx == 'undefined') {
             idx = (random() * 100000) % this.fruits.length | 0;
         }
 
-        this._idx = idx;
-        this.icon.spriteFrame = this.fruits[this._idx].icon;
-        this._width = this.node.getComponent(UITransform).width;
+        this.idx = idx;
+        this.icon.spriteFrame = this.fruits[this.idx].icon;
+        this.width = this.node.getComponent(UITransform).width;
     }
 
     setActive(active: boolean) {
-        this._isActive = active;
+        this.isActive = active;
         if (active) {
-            this.icon.spriteFrame = this.fruits[this._idx].icon2;
+            this.icon.spriteFrame = this.fruits[this.idx].icon2;
         } else {
-            this.icon.spriteFrame = this.fruits[this._idx].icon;
+            this.icon.spriteFrame = this.fruits[this.idx].icon;
         }
         if (active) {
             Tween.stopAllByTarget(this.node);
@@ -85,20 +85,12 @@ export class FruitItem extends Component {
         // this.node.removeFromParent();
     }
 
-    getIdx(): number {
-        return this._idx;
-    }
-
-    getWidth(): number {
-        return this._width;
-    }
-
     click(ev: Event) {
-        console.log(`fruit item click ${this._x}, ${this._y}, ${this._idx}`);
-        this.setActive(!this._isActive);
-        if (this._isActive) {
-            AudioMgr.inst.play('music/itemSelect');
-        }
+        console.log(`fruit item click ${this.x}, ${this.y}, ${this.idx}`);
+        // this.setActive(!this._isActive);
+        // if (this._isActive) {
+        //     AudioMgr.inst.play('music/itemSelect');
+        // }
     }
 
 }
