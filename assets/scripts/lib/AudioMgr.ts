@@ -11,7 +11,7 @@ export class AudioMgr {
         return this._inst;
     }
 
-    private _audioSource: AudioSource;
+    private _audioSource: AudioSource|null;
     
     constructor() {
         let audioMgr = new Node();
@@ -61,15 +61,16 @@ export class AudioMgr {
     }
 
     stop() {
-        this._audioSource.stop();
+        this._audioSource?.stop();
+        this._audioSource.node.active = false;
     }
 
     pause() {
-        this._audioSource.pause();
+        this._audioSource?.pause();
     }
 
     resume() {
-        this._audioSource.play();
+        this._audioSource?.play();
     }
 
 }

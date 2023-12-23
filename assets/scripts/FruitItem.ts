@@ -51,7 +51,7 @@ export class FruitItem extends Component {
     }
 
     onDestroy() {
-        console.log('fruit item destory');
+        // console.log('fruit item destory');
         // this.node.off(Node.EventType.TOUCH_START, this._handler, this);
     }
 
